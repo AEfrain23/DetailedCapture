@@ -1,0 +1,32 @@
+/* -------------------- INDEX/PHOTGRAPHY -------------------- */
+
+.page-header {
+  margin: 4rem;
+  font-family: Roboto-Condensed;
+  text-align: center;
+}
+
+.photo-container {
+  margin: 0 5%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 20px;
+}
+
+.photo-card {
+  width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .photo-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .photo-container {
+    margin: 0 5%;
+    grid-template-columns: 1fr;
+  }
+}
