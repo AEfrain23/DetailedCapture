@@ -1,7 +1,7 @@
 /* -------------------- INDEX/PHOTGRAPHY -------------------- */
 
 .page-header {
-  margin: 4rem;
+  margin: 4rem 0rem;
   font-family: Roboto-Condensed;
   text-align: center;
 }
@@ -28,5 +28,26 @@
   .photo-container {
     margin: 0 5%;
     grid-template-columns: 1fr;
+  }
+}
+
+
+/* -------------------- FOOTER -------------------- */
+
+#footer {
+  margin: 4rem 0rem 2rem 0rem;
+  font-family: Roboto-Condensed;
+  text-align: center;
+}
+
+.social-icon {
+  margin: 2.5px;
+  width: 25px;
+}
+
+@media (max-width: 576px) {
+  .social-icon {
+    margin: 2.5px;
+    width: 20px;
   }
 }
