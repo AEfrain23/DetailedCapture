@@ -44,6 +44,11 @@ header {
   gap: 2rem;
 }
 
+a {
+  color: white;
+  text-decoration: none;
+}
+
 .mobile-navbar-toggle {
   display: none;
 }
