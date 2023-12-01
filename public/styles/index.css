@@ -57,6 +57,11 @@ body {
 .social-icon {
   margin: 2.5px;
   width: 25px;
+  aspect-ratio: 1 / 1;
+}
+
+#footer > p {
+  margin: 0.5rem 5%;
 }
 
 @media (max-width: 576px) {
