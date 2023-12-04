@@ -1,0 +1,47 @@
+/* ---------- GRID BOX BEHAVIOUR ---------- */
+/* Here we are changing the gridbox behaviour so that when we set a width of 100% for an inner element it does not exeed 10% with padding and
+border. */
+html {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+/* ---------- CONTACT FORM ---------- */
+
+.contact-form {
+    padding: 1rem;
+    background-color: rgb(100, 100, 100);
+    color: white;
+    width: 20rem;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.item.three {
+    grid-column: span 2;
+}
+
+.item>p {
+    margin: 0 0 5px 0;
+}
+
+.item input {
+    width: 100%;
+}
+.item textarea {
+    width: 100%;
+}
+
+@media (max-width: 576px) {
+    .contact-form {
+        width: 80%;
+    }
+    
+}

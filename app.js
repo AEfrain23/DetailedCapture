@@ -16,6 +16,14 @@ app.get("/prints", (req, res) => {
     res.render("prints.ejs")
 });
 
+app.get("/about", (req, res) => {
+    res.render("about.ejs")
+});
+
+app.get("/contact", (req, res) => {
+    res.render("contact.ejs")
+});
+
 app.listen(port, () => {
     console.log("Server is runing on port 3000");
 });

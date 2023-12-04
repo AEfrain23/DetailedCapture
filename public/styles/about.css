@@ -1,0 +1,23 @@
+.about-text {
+    margin: 0 20%;
+    text-align: center;
+}
+
+
+@media (max-width: 1200px) {
+    .about-text {
+        margin: 0 15%;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-text {
+        margin: 0 10%;
+    }
+}
+
+@media (max-width: 576px) {
+    .about-text {
+        margin: 0 5%;
+    }
+}
