@@ -1,10 +1,9 @@
 /* ---------- GRID BOX BEHAVIOUR ---------- */
-/* Here we are changing the gridbox behaviour so that when we set a width of 100% for an inner element it does not exeed 10% with padding and
-border. */
-html {
+/* Changing the gridbox behaviour for the contact form so that when we set a width of 100% for an inner element it does not exeed 10% 
+with padding and border. */
+html .contact-form {
   box-sizing: border-box;
 }
-
 *,
 *:before,
 *:after {
