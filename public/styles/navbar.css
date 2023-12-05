@@ -84,7 +84,7 @@ header {
 @media (max-width: 768px) {
 
   .navbar-container {
-    padding: 1rem 1rem;
+    padding: 1rem;
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
@@ -152,6 +152,10 @@ header {
 
   .menu-options {
     inset: 53px 0 0 0;
+  }
+
+  .navbar-container {
+    padding: 12.5px 1rem;
   }
 }
 
