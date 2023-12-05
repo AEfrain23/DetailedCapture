@@ -23,7 +23,7 @@ header {
 }
 
 .navbar-container {
-  padding: 2.5rem 5rem;
+  padding: 2.5rem 7.5rem;
   background-color: black;
   display: flex;
   justify-content: space-between;
@@ -68,7 +68,7 @@ header {
 
 @media (max-width: 1200px) {
   .navbar-container {
-    padding: 2.5rem 2.5rem;
+    padding: 2.5rem 4rem;
   }
 }
 
