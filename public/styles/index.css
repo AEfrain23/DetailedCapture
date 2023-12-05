@@ -42,7 +42,7 @@ body {
   .page-title {
     font-size: 2rem;
   }
-  
+
 }
 
 
@@ -50,7 +50,6 @@ body {
 
 #footer {
   margin: 4rem 0rem 2rem 0rem;
-  font-family: Roboto-Condensed;
   text-align: center;
 }
 
@@ -60,13 +59,12 @@ body {
   aspect-ratio: 1 / 1;
 }
 
-#footer > p {
+#footer>p {
   margin: 0.5rem 5%;
 }
 
-@media (max-width: 576px) {
-  .social-icon {
-    margin: 2.5px;
-    width: 20px;
-  }
+#footer>a {
+  color: rgb(100, 100, 100);
+  padding: 0.1rem;
+  text-decoration: none;
 }
