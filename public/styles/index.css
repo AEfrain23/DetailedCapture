@@ -67,4 +67,7 @@ body {
   color: rgb(100, 100, 100);
   padding: 0.1rem;
   text-decoration: none;
+  height: fit-content;
+  display: inline-block;
 }
+
