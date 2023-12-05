@@ -1,6 +1,10 @@
 
 /* --------------------- ENTIRE BODY --------------------- */
 
+.red {
+  background-color: red;
+}
+
 body {
   background-color: white;
   margin: 0;
@@ -46,6 +50,16 @@ header {
   color: white;
   text-decoration: none;
   /* border-bottom: 1px solid rgb(120, 120, 120); */
+}
+
+.cart-icon {
+  color: white;
+}
+
+.cart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .mobile-navbar-toggle {
@@ -123,6 +137,12 @@ header {
     text-decoration: none;
     border-bottom: 1px solid rgb(120, 120, 120);
   }
+  
+  .cart-container {
+    gap: 0.65rem;
+    flex-direction: row-reverse;
+  }
+
 }
 
 @media (max-width: 576px) {
