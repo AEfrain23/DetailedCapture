@@ -4,10 +4,8 @@ with padding and border. */
 html .contact-form {
   box-sizing: border-box;
 }
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
+html .contact-form * {
+  box-sizing: border-box;
 }
 
 /* ---------- CONTACT FORM ---------- */
