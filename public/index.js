@@ -11,3 +11,15 @@ navbarToggle.addEventListener("click", () => {
         navbarToggle.setAttribute("aria-expanded", false);
     }
 });
+
+
+// COTACT FORM SEND BUTTON - Here we are reloading the page 3s after the send button has been pressed.
+
+const confirmationWindow = document.querySelector(".confirmation-container");
+const visibility = confirmationWindow.getAttribute("visibility");
+
+if (visibility === "true") {
+    setTimeout(function () {
+        window.location = "http://www.detailedcapture.com";
+    }, 3000);
+}
