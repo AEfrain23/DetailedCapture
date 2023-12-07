@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import ejs from "ejs";
 import nodemailer from 'nodemailer';
+import 'dotenv/config'
 
 
 const app = express();
@@ -38,7 +39,7 @@ app.post("/send-message", (req, res) => {
         port: 587,
         auth: {
             user: "angelefrain23@gmail.com",
-            pass: "xsmtpsib-79863b2ad1da4b2227c55d30beb3605a9597e623a9e3187c6623ccc87b837621-U8VRsAZCO2tmz7XY"
+            pass: process.env.SMTP_KEY
         }
     });
 
