@@ -21,5 +21,5 @@ const visibility = confirmationWindow.getAttribute("visibility");
 if (visibility === "true") {
     setTimeout(function () {
         window.location = "http://www.detailedcapture.com";
-    }, 3000);
+    }, 5000);
 }
