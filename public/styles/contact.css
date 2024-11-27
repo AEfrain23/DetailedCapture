@@ -50,6 +50,12 @@ html .contact-form * {
   margin: auto;
 }
 
+.g-recaptcha {
+  grid-column: span 2;
+  display: flex;
+  justify-content: center;
+}
+
 @media (max-width: 768px) {
   .contact-form {
     width: 90%;
@@ -63,6 +69,10 @@ button {
   padding: 5px 10px;
   font: inherit;
   outline: inherit;
+}
+
+.confirmation-container[visibility="false"] {
+  visibility: hidden;
 }
 
 
