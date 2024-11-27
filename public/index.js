@@ -30,7 +30,7 @@ form.addEventListener('submit', (e) => {
     const fd = new FormData(e.target);
     const params = new URLSearchParams(fd);
 
-    fetch('http://178.79.154.20:3003/send-message', {
+    fetch('https://www.detailedcapture.com:3003/send-message', {
         method: "POST",
         body: params,
     })
