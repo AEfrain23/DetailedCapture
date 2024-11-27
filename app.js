@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import ejs from "ejs";
 import nodemailer from 'nodemailer';
 import 'dotenv/config'
+import cors from 'cors';   
 
 
 const app = express();
@@ -10,6 +11,21 @@ const port = 3003;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
+
+
+
+// CORS configuration to allow requests only from your live domain
+const corsOptions = {
+    origin: 'https://www.detailedcapture.com',  // Only allow requests from your live domain
+    methods: ['GET', 'POST'],                   // Allow only GET and POST requests
+    allowedHeaders: ['Content-Type', 'Authorization'],  // Allow specific headers
+};
+
+// Use CORS middleware with the above configuration
+app.use(cors(corsOptions));
+
+
+
 
 app.get("/", (req, res) => {
     res.render("index.ejs")
