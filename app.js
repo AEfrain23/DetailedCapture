@@ -49,7 +49,7 @@ app.get("/contact", (req, res) => {
 app.post("/send-message", (req, res) => {
 
     const params = new URLSearchParams({
-        secret: "6LdG94sqAAAAAPEy6BuTyc1ItIc1MuoDM-mgTqJ9",
+        secret: process.env.RECAPTCHA_KEY,
         response: req.body['g-recaptcha-response'],
         remoteip: req.ip,
     });
