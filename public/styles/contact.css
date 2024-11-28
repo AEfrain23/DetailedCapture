@@ -49,7 +49,7 @@ html .contact-form * {
 
 @media (max-width: 576px) {
   .item textarea {
-    height: 8em
+    height: 8em;
   }
 }
 
