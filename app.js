@@ -25,89 +25,91 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
-    res.render("index.ejs")
+  res.render("index.ejs")
 });
 
 app.get("/prints", (req, res) => {
-    res.render("prints.ejs")
+  res.render("prints.ejs")
 });
 
 app.get("/about", (req, res) => {
-    res.render("about.ejs")
+  res.render("about.ejs")
 });
 
 app.get("/contact", (req, res) => {
-    res.render("contact.ejs")
+  res.render("contact.ejs")
 });
 
 
 
 // Route to handle form submission and reCAPTCHA validation
 app.post("/send-message", (req, res) => {
-    const { customerName, customerEmail, customerMessage, 'g-recaptcha-response': captchaResponse } = req.body;
+  const { customerName, customerEmail, customerMessage, 'g-recaptcha-response': captchaResponse } = req.body;
 
-    // Step 1: Verify reCAPTCHA response with Google
-    const secretKey = process.env.RECAPTCHA_KEY;  // Store this in your .env file
+  // Step 1: Verify reCAPTCHA response with Google
+  const secretKey = process.env.RECAPTCHA_KEY;  // Store this in your .env file
 
-    const params = new URLSearchParams({
-        secret: secretKey,
-        response: captchaResponse,
-        remoteip: req.ip,
-    });
+  const params = new URLSearchParams({
+    secret: secretKey,
+    response: captchaResponse,
+    remoteip: req.ip,
+  });
 
-    fetch('https://www.google.com/recaptcha/api/siteverify', {
-        method: 'POST',
-        body: params,
-    })
+  fetch('https://www.google.com/recaptcha/api/siteverify', {
+    method: 'POST',
+    body: params,
+  })
     .then(response => response.json())
     .then(data => {
-        // Step 2: If reCAPTCHA validation is successful, send the email
-        if (data.success) {
-            console.log("Successful reCAPTCHA validation");
+      // Step 2: If reCAPTCHA validation is successful, send the email
+      if (data.success) {
+        console.log("Successful reCAPTCHA validation");
 
-            let transporter = nodemailer.createTransport({
-                host: 'smtp-relay.sendinblue.com',
-                port: 587,
-                auth: {
-                    user: "angelefrain23@gmail.com",  // Your email
-                    pass: process.env.SMTP_KEY,   // Your SMTP key
-                },
-            });
+        let transporter = nodemailer.createTransport({
+          host: 'smtp-relay.sendinblue.com',
+          port: 587,
+          auth: {
+            user: "angelefrain23@gmail.com",  // Your email
+            pass: process.env.SMTP_KEY,   // Your SMTP key
+          },
+        });
 
-            const message = {
-                from: customerEmail,
-                to: "detailedcapture@gmail.com",
-                subject: `detailedcapture.com - ${customerName}`,
-                text: `Customer Name: ${customerName}\nCustomer Message: ${customerMessage}`,  // Use newlines for clarity
-            };
+        const message = {
+          from: customerEmail,
+          to: "detailedcapture@gmail.com",
+          subject: `detailedcapture.com - ${customerName}`,
+          text: `Customer Name: ${customerName}\nCustomer Message: ${customerMessage}`,  // Use newlines for clarity
+        };
 
-            // Send the email using Nodemailer
-            transporter.sendMail(message, (err, info) => {
-                if (err) {
-                    console.log(err);
-                    res.status(500).json({ message: "Error sending email" });
-                } else {
-                    console.log(info);
-                    const emailSent = "Email sent successfully";
-                    // Step 3: Render the confirmation page with a success message
-                    res.render("contact.ejs", { confirmation: emailSent });  // Render the EJS page with the confirmation message
-                }
-            });
+        // Send the email using Nodemailer
+        transporter.sendMail(message, (err, info) => {
+          if (err) {
+            console.log(err);
+            res.status(500).json({ message: "Error sending email" });
+          } else {
+            console.log(info);
+            const emailSent = "Email sent successfully";
+            const textResponse = "Thank you for you message.";
+            // Step 3: Render the confirmation page with a success message
+            res.render("contact.ejs", { confirmation: emailSent, message: textResponse });  // Render the EJS page with the confirmation message
+          }
+        });
 
-        } else {
-            // If reCAPTCHA failed, render the contact page with an error message
-            const errorMessage = "reCAPTCHA validation failed. Please try again.";
-            console.log("reCAPTCHA validation failed.")
-            res.render("contact.ejs", { confirmation: errorMessage });
-        }
+      } else {
+        // If reCAPTCHA failed, render the contact page with an error message
+        const errorMessage = "reCAPTCHA validation failed";
+        const textResponse = "Please try again.";
+        console.log("reCAPTCHA validation failed.");
+        res.render("contact.ejs", { confirmation: errorMessage, message: textResponse });
+      }
     })
     .catch(err => {
-        console.error(err);
-        res.status(500).json({ message: "Error validating reCAPTCHA" });
+      console.error(err);
+      res.status(500).json({ message: "Error validating reCAPTCHA" });
     });
 });
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+  console.log(`Server is running on port ${port}`);
 });
