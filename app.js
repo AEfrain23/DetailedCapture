@@ -97,6 +97,7 @@ app.post("/send-message", (req, res) => {
         } else {
             // If reCAPTCHA failed, render the contact page with an error message
             const errorMessage = "reCAPTCHA validation failed. Please try again.";
+            console.log("reCAPTCHA validation failed.")
             res.render("contact.ejs", { confirmation: errorMessage });
         }
     })
