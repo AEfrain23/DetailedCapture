@@ -1,31 +1,28 @@
-import express from "express";
-import bodyParser from "body-parser";
-import ejs from "ejs";
+import express from 'express';
 import nodemailer from 'nodemailer';
-import 'dotenv/config'
-import cors from 'cors';   
-
+import bodyParser from 'body-parser';
+import cors from 'cors';  // Importing CORS middleware
+import fetch from 'node-fetch';  // node-fetch v2 // For sending requests to reCAPTCHA API
+import 'dotenv/config'; // For loading environment variables
 
 const app = express();
 const port = 3003;
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
 
-
-
-// CORS configuration to allow requests only from your live domain
+// CORS Configuration: Allowing requests from your live domain
 const corsOptions = {
-    origin: 'https://www.detailedcapture.com',  // Only allow requests from your live domain
+    origin: 'https://www.detailedcapture.com',  // Allow only your live domain
     methods: ['GET', 'POST'],                   // Allow only GET and POST requests
     allowedHeaders: ['Content-Type', 'Authorization'],  // Allow specific headers
 };
 
-// Use CORS middleware with the above configuration
-app.use(cors(corsOptions));
+// Use the CORS middleware with these options
+app.use(cors(corsOptions));  // Enable CORS for the specific domain
 
 
-
+// Middleware to parse incoming form data
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
 
 app.get("/", (req, res) => {
     res.render("index.ejs")
@@ -45,73 +42,71 @@ app.get("/contact", (req, res) => {
 
 
 
-
+// Route to handle form submission and reCAPTCHA validation
 app.post("/send-message", (req, res) => {
+    const { customerName, customerEmail, customerMessage, 'g-recaptcha-response': captchaResponse } = req.body;
+
+    // Step 1: Verify reCAPTCHA response with Google
+    const secretKey = process.env.RECAPTCHA_KEY;  // Store this in your .env file
 
     const params = new URLSearchParams({
-        secret: process.env.RECAPTCHA_KEY,
-        response: req.body['g-recaptcha-response'],
+        secret: secretKey,
+        response: captchaResponse,
         remoteip: req.ip,
     });
 
     fetch('https://www.google.com/recaptcha/api/siteverify', {
-        method: "POST",
+        method: 'POST',
         body: params,
     })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                res.json({ captchaSuccess: true })
-                // ONCE CAPTURE IS SUCCESFUL SEND EMAIL USING NODEMAILER ----------
-                const customerName = req.body.customerName;
-                const customerEmail = req.body.customerEmail;
-                const customerMessage = req.body.customerMessage;
+    .then(response => response.json())
+    .then(data => {
+        // Step 2: If reCAPTCHA validation is successful, send the email
+        if (data.success) {
+            console.log("Successful reCAPTCHA validation");
 
-                console.log(customerName + customerEmail + customerMessage);
+            let transporter = nodemailer.createTransport({
+                host: 'smtp-relay.sendinblue.com',
+                port: 587,
+                auth: {
+                    user: "angelefrain23@gmail.com",  // Your email
+                    pass: process.env.SMTP_KEY,   // Your SMTP key
+                },
+            });
 
-                let transporter = nodemailer.createTransport({
-                    host: 'smtp-relay.sendinblue.com',
-                    port: 587,
-                    auth: {
-                        user: "angelefrain23@gmail.com",
-                        pass: process.env.SMTP_KEY
-                    }
-                });
+            const message = {
+                from: customerEmail,
+                to: "detailedcapture@gmail.com",
+                subject: `detailedcapture.com - ${customerName}`,
+                text: `Customer Name: ${customerName}\nCustomer Message: ${customerMessage}`,  // Use newlines for clarity
+            };
 
-                const message = {
-                    from: customerEmail,
-                    to: "detailedcapture@gmail.com",
-                    subject: "detailedcapture.com - " + customerName,
-                    text: "Customer Name: " + customerName +
-                        "\n" + "Customer Message: " + customerMessage  // REMEMBER: "\n" in concactonation creates a new line break.
+            // Send the email using Nodemailer
+            transporter.sendMail(message, (err, info) => {
+                if (err) {
+                    console.log(err);
+                    res.status(500).json({ message: "Error sending email" });
+                } else {
+                    console.log(info);
+                    const emailSent = "Email sent successfully";
+                    // Step 3: Render the confirmation page with a success message
+                    res.render("contact.ejs", { confirmation: emailSent });  // Render the EJS page with the confirmation message
                 }
+            });
 
-                transporter.sendMail(message, function (err, info) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log(info);
-                        // BEFORE WE WERE USING EJS (BELOW) TO RENDER POPUP MESSAGE, NOW WE ARE USING JavaScript in index.js.
-                        // const emailSent = "Email sent successfully";
-                        // res.render("contact.ejs", { confirmation: emailSent }); // REMEMBER: In order to render we must us a key-value-pair formatt.
-                    }
-                });
-                // ----------------------------------------------------------------------
-
-
-            } else {
-                res.json({ captchaSuccess: false })
-            }
-        })
-
-
-
-
-
+        } else {
+            // If reCAPTCHA failed, render the contact page with an error message
+            const errorMessage = "reCAPTCHA validation failed. Please try again.";
+            res.render("contact.ejs", { confirmation: errorMessage });
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        res.status(500).json({ message: "Error validating reCAPTCHA" });
+    });
 });
 
-
-
+// Start the server
 app.listen(port, () => {
-    console.log("Server is runing on port 3003");
+    console.log(`Server is running on port ${port}`);
 });
