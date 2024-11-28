@@ -91,7 +91,7 @@ app.post("/send-message", (req, res) => {
             const emailSent = "Email sent successfully";
             const textResponse = "Thank you for you message.";
             // Step 3: Render the confirmation page with a success message
-            res.render("contact.ejs", { confirmation: emailSent, message: textResponse });  // Render the EJS page with the confirmation message
+            res.render("contact.ejs", { confirmation: emailSent, textMessage: textResponse });  // Render the EJS page with the confirmation message
           }
         });
 
@@ -100,7 +100,7 @@ app.post("/send-message", (req, res) => {
         const errorMessage = "reCAPTCHA validation failed";
         const textResponse = "Please try again.";
         console.log("reCAPTCHA validation failed.");
-        res.render("contact.ejs", { confirmation: errorMessage, message: textResponse });
+        res.render("contact.ejs", { confirmation: errorMessage, textMessage: textResponse });
       }
     })
     .catch(err => {
