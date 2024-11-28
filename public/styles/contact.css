@@ -4,6 +4,7 @@ with padding and border. */
 html .contact-form {
   box-sizing: border-box;
 }
+
 html .contact-form * {
   box-sizing: border-box;
 }
@@ -45,6 +46,13 @@ html .contact-form * {
   font-size: 1rem;
   font-family: Roboto-Condensed;
 }
+
+@media (max-width: 576px) {
+  .item textarea {
+    height: 8em
+  }
+}
+
 
 .contact-form .four {
   margin: auto;
