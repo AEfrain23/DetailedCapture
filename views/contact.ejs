@@ -27,11 +27,13 @@
   </form>
 
   <!-- Confirmation Container to display message after submission -->
-  <% if (locals.confirmation & locals.message) { %>
+  <% if (locals.confirmation) { %>
     <div class="confirmation-container" style="visibility: visible;">
       <div class="confirmation-box">
         <p class="confirmation-message"><%- confirmation %></p>
+        <% if (locals.message) { %>
         <p style="color: white;"><%- message %></p>
+        <% } %>
       </div>
     </div>
   <% } %>
