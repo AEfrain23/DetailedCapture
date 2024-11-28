@@ -9,15 +9,15 @@ const app = express();
 const port = 3003;
 
 
-// CORS Configuration: Allowing requests from your live domain
-const corsOptions = {
-    origin: 'https://www.detailedcapture.com',  // Allow only your live domain
-    methods: ['GET', 'POST'],                   // Allow only GET and POST requests
-    allowedHeaders: ['Content-Type', 'Authorization'],  // Allow specific headers
-};
+// // CORS Configuration: Allowing requests from your live domain
+// const corsOptions = {
+//     origin: 'https://www.detailedcapture.com',  // Allow only your live domain
+//     methods: ['GET', 'POST'],                   // Allow only GET and POST requests
+//     allowedHeaders: ['Content-Type', 'Authorization'],  // Allow specific headers
+// };
 
-// Use the CORS middleware with these options
-app.use(cors(corsOptions));  // Enable CORS for the specific domain
+// // Use the CORS middleware with these options
+// app.use(cors(corsOptions));  // Enable CORS for the specific domain
 
 
 // Middleware to parse incoming form data
